@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IoT Futuristic Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Firebase config langsung di-load dari script.js
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>⚡ IoT Futuristic Control Panel</h1>
+    <div class="clock" id="clock">Loading time...</div>
+
+    <div class="relay-panel">
+      <div class="relay" id="relay1">
+        <h2>Relay 1</h2>
+        <button data-relay="relay1">...</button>
+      </div>
+      <div class="relay" id="relay2">
+        <h2>Relay 2</h2>
+        <button data-relay="relay2">...</button>
+      </div>
+      <div class="relay" id="relay3">
+        <h2>Relay 3</h2>
+        <button data-relay="relay3">...</button>
+      </div>
+      <div class="relay" id="relay4">
+        <h2>Relay 4</h2>
+        <button data-relay="relay4">...</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
