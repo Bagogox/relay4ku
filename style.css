@@ -1,61 +1,275 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background: radial-gradient(#0f0f2e, #050516);
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(120, 200, 255, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #0c0c1e 0%, #161b33 50%, #0f0f2e 100%);
   color: #00f7ff;
   font-family: 'Orbitron', sans-serif;
   margin: 0;
   padding: 0;
   text-align: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated background particles */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 247, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 247, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Glitch effect for title */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  10% { transform: translate(-2px, 1px); }
+  20% { transform: translate(2px, -1px); }
+  30% { transform: translate(-1px, 2px); }
+  40% { transform: translate(1px, -2px); }
+  50% { transform: translate(-2px, 1px); }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes scan {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+  }
+  50% { 
+    box-shadow: 
+      0 8px 25px rgba(255, 71, 87, 0.6),
+      0 0 30px rgba(255, 71, 87, 0.4);
+  }
 }
 
 .container {
   padding: 30px;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px #00f7ff;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  text-shadow: 
+    0 0 10px #00f7ff,
+    0 0 20px #00f7ff,
+    0 0 40px #00f7ff;
+  background: linear-gradient(45deg, #00f7ff, #39ff14, #ff00ff, #00f7ff);
+  background-size: 400% 400%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite, glitch 0.3s infinite;
+  position: relative;
+}
+
+h1::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #ff00ff, #00f7ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: -1;
+  animation: glitch 0.3s infinite reverse;
+  opacity: 0.8;
 }
 
 .clock {
-  font-size: 2rem;
-  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
   color: #39ff14;
-  text-shadow: 0 0 10px #39ff14;
+  text-shadow: 
+    0 0 10px #39ff14,
+    0 0 20px #39ff14,
+    0 0 30px #39ff14;
+  background: rgba(57, 255, 20, 0.1);
+  border: 2px solid #39ff14;
+  border-radius: 15px;
+  padding: 20px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.clock::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(57, 255, 20, 0.1), transparent);
+  animation: scan 2s linear infinite;
 }
 
 .relay-panel {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 600px;
+  gap: 25px;
+  max-width: 800px;
   margin: auto;
 }
 
 .relay {
-  background: #1b1b2f;
+  background: 
+    linear-gradient(135deg, rgba(27, 27, 47, 0.9), rgba(0, 247, 255, 0.05));
   border: 2px solid #00f7ff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 0 15px #00f7ff50;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 
+    0 0 15px rgba(0, 247, 255, 0.3),
+    inset 0 0 15px rgba(0, 247, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.relay:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(0, 247, 255, 0.4),
+    inset 0 0 20px rgba(0, 247, 255, 0.2);
+  border-color: #39ff14;
+}
+
+.relay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00f7ff, #39ff14, #ff00ff, #00f7ff);
+  background-size: 400% 100%;
+  animation: borderFlow 2s linear infinite;
 }
 
 .relay h2 {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  position: relative;
 }
 
 .relay button {
-  font-size: 1.2rem;
-  padding: 10px 25px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 15px 35px;
   border: none;
-  border-radius: 8px;
-  background: #00f7ff;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #00f7ff, #0088cc);
   color: #000;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 247, 255, 0.3);
+}
+
+.relay button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.relay button:hover::before {
+  left: 100%;
 }
 
 .relay button:hover {
-  background: #39ff14;
-  box-shadow: 0 0 10px #39ff14;
+  background: linear-gradient(45deg, #39ff14, #00ff88);
+  box-shadow: 
+    0 8px 25px rgba(57, 255, 20, 0.4),
+    0 0 30px rgba(57, 255, 20, 0.3);
+  transform: translateY(-3px);
+}
+
+.relay button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 247, 255, 0.3);
+}
+
+.relay button.on {
+  background: linear-gradient(45deg, #ff6b6b, #ff4757);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.relay button.on:hover {
+  background: linear-gradient(45deg, #ff4757, #ff3838);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  h1 { 
+    font-size: 2.5rem; 
+  }
+  
+  .clock { 
+    font-size: 2rem; 
+    padding: 15px;
+  }
+  
+  .relay-panel { 
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .container { 
+    padding: 20px; 
+  }
+  
+  .relay {
+    padding: 20px;
+  }
+  
+  .relay button {
+    font-size: 1.1rem;
+    padding: 12px 28px;
+  }
 }
